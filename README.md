@@ -50,7 +50,7 @@ cd advanced-ai-agents
 ### 2. Create a virtual environment
 
 ```bash
-python -m venv venv
+python -m venv .venv
 ```
 
 Activate it:
