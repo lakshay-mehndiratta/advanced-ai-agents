@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Advanced AI Agents
 
 A learning project focused on building personal AI agents and understanding the concepts behind modern agentic AI systems.
@@ -99,4 +98,3 @@ This project will evolve as I explore more advanced AI and agentic AI concepts t
 =======
 # advanced-ai-agents
 Building personal AI agents while learning advanced AI concepts, tool calling, agentic workflows, and LLM integrations.
->>>>>>> 692f2ee5f8a8863c1d3cb0408e196befa7981f03
