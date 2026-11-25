@@ -15,15 +15,27 @@ A command-line AI assistant powered by an LLM with function/tool calling capabil
 - Maintains conversation history using message roles.
 - LLM-powered tool selection.
 - Executes Python functions based on LLM tool calls.
-- Returns tool execution results to the LLM for generating responses.
+- Returns tool execution results to the LLM to generate responses.
 - Retrieves the current date and time through a custom tool.
+- Fetches current weather information for a specified city.
+- Searches the web for relevant information using the Tavily API.
+
+### Available Tools
+
+| Tool | Description |
+|---|---|
+| `get_curr_time` | Retrieves the current date and time. |
+| `get_city_weather` | Fetches current weather information for a given city using wttr.in. |
+| `web_search` | Searches the web using Tavily and returns relevant results, including titles, URLs, and content. |
 
 ## Tech Stack
 
 - Python
 - OpenAI Python SDK
-- LLM API
+- OpenAI-compatible LLM API
 - Function Calling / Tool Calling
+- Tavily API
+- Requests
 - python-dotenv
 
 ## Project Structure
@@ -43,7 +55,7 @@ A command-line AI assistant powered by an LLM with function/tool calling capabil
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/advanced-ai-agents.git
+git clone https://github.com/lakshay-mehndiratta/advanced-ai-agents.git
 cd advanced-ai-agents
 ```
 
@@ -57,12 +69,12 @@ Activate it:
 
 **macOS / Linux**
 ```bash
-source venv/bin/activate
+source .venv/bin/activate
 ```
 
 **Windows**
 ```bash
-venv\Scripts\activate
+.venv\Scripts\activate
 ```
 
 ### 3. Install dependencies
@@ -73,7 +85,11 @@ pip install -r requirements.txt
 
 ### 4. Configure environment variables
 
-Create a `.env` file using `.env.example` as a reference and provide your API configuration.
+Create a `.env` file using `.env.example` as a reference and provide the required API configuration.
+
+This includes:
+- LLM API configuration (`BASE_URL`, `API_KEY`, `MODEL`).
+- Tavily API key (`TAVILY_API_KEY`).
 
 ### 5. Run the assistant
 
@@ -89,12 +105,10 @@ This project will evolve as I explore more advanced AI and agentic AI concepts t
 - [x] Conversation history management
 - [x] Function / Tool calling
 - [x] Current date and time tool
-- [ ] Multiple custom tools
+- [x] Current weather tool
+- [x] Web search tool
 - [ ] Advanced tool execution workflows
 - [ ] Multi-step agentic workflows
 - [ ] Personal AI agents
 
 *More implementations will be added as I progress.*
-=======
-# advanced-ai-agents
-Building personal AI agents while learning advanced AI concepts, tool calling, agentic workflows, and LLM integrations.
