@@ -1,10 +1,10 @@
-from openai import OpenAI
 from dotenv import load_dotenv
+load_dotenv()  # Load environment variables from .env file
+
+from openai import OpenAI
 import os
 import json
-from tools import TOOLS, FUNCTION_NAME_TO_FUNCTION_MAP
-
-load_dotenv()  # Load environment variables from .env file
+from tools import TOOLS, FUNCTION_NAME_TO_FUNCTION_MAP, get_curr_time
 
 client = OpenAI(
     base_url = os.getenv("BASE_URL"),
@@ -16,7 +16,7 @@ messages = []
 messages.append(
     {
         "role" : "system",
-        "content" : "Always respond within 100 words"
+        "content" : f"You are a helpful AI assistant. Current date and time: {get_curr_time()}. Always respond within 100 words"
     }
 )
 
