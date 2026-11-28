@@ -1,7 +1,14 @@
+# Standard library imports
 import os
+import json
 from datetime import datetime
+
+# Third-party imports
 import requests
 from tavily import TavilyClient
+
+# Local module imports
+from Utilities.utilities import log
 
 def get_curr_time():
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -20,8 +27,6 @@ def web_search(query):
         max_results = 5,
         search_depth = "basic"
     )
-
-    response.raise_for_status() 
 
     results = []
 
@@ -86,3 +91,18 @@ FUNCTION_NAME_TO_FUNCTION_MAP = {
     "get_city_weather" : get_city_weather,
     "web_search" : web_search,
 }
+
+def run_tool(tool_call):
+    function_name = tool_call.function.name # Extract the function's name from every tool call
+    function_arguments = {}
+
+    try:
+        function_arguments = json.loads(tool_call.function.arguments or "{}") # Extract the stringified json from tool call, then convert it to a dictionary using json.loads()
+        log(f"🔧 {function_name}({function_arguments})")
+        fn = FUNCTION_NAME_TO_FUNCTION_MAP[function_name] # obtain the actual function from function_name using the map
+        result = fn(**function_arguments)
+    except Exception as e:
+        result = f"Error executing tool '{function_name}': {str(e)}"
+
+    log(f"   ↳ {result}")
+    return str(result)
