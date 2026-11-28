@@ -88,4 +88,4 @@ while True:
         }
     )
 
-    print("Assistant: " + msg.content) # Response from the LLM model : qwen3:4b
+    print("Assistant: " + (msg.content or "")) # Response from the LLM model : qwen3:4b

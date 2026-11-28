@@ -9,6 +9,7 @@ def get_curr_time():
 def get_city_weather(city):
     url = f"https://wttr.in/{city}?format=3"
     response = requests.get(url, timeout=10)
+    response.raise_for_status() # This will raise HTTPError if something goes wrong
     return response.text
 
 def web_search(query):
@@ -19,6 +20,8 @@ def web_search(query):
         max_results = 5,
         search_depth = "basic"
     )
+
+    response.raise_for_status() 
 
     results = []
 
