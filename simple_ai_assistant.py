@@ -5,6 +5,7 @@ from openai import OpenAI
 import os
 import json
 from tools import TOOLS, FUNCTION_NAME_TO_FUNCTION_MAP, get_curr_time
+from Utilities.utilities import log
 
 client = OpenAI(
     base_url = os.getenv("BASE_URL"),
@@ -23,7 +24,7 @@ messages.append(
 max_steps = 10 # Maximum number of steps allowed in a single response from the LLM. This is to prevent infinite loops and excessive tool calls.
 
 while True:
-    user_input = input("Lakshay: ")
+    user_input = input("😎 Lakshay: ")
 
     if user_input.lower() in ["exit", "quit", "bye", "goodbye"]:
         break
@@ -47,6 +48,8 @@ while True:
         if not msg.tool_calls: # If the LLM response does not contain any tool calls, break the loop and return the response to the user
             break
 
+        log(f"Step {step + 1}: model requested {len(msg.tool_calls)} tool call(s).")
+
         messages.append(msg) # Append the LLM's response to history
 
         # Process each tool call in the LLM's response
@@ -56,11 +59,13 @@ while True:
 
             try:
                 function_arguments = json.loads(tool_call.function.arguments or "{}") # Extract the stringified json from tool call, then convert it to a dictionary using json.loads()
+                log(f"🔧 {function_name}({function_arguments})")
                 fn = FUNCTION_NAME_TO_FUNCTION_MAP[function_name] # obtain the actual function from function_name using the map
                 result = fn(**function_arguments)
             except Exception as e:
                 result = f"Error executing tool '{function_name}': {str(e)}"
 
+            log(f"   ↳ {result}")
             messages.append(
                 {
                     "role" : "tool",
@@ -78,7 +83,7 @@ while True:
                 "content" : fallback
             }
         )
-        print("Assistant: " + fallback)
+        print("🤖 Assistant: " + fallback)
         continue
 
     messages.append(
@@ -88,4 +93,4 @@ while True:
         }
     )
 
-    print("Assistant: " + (msg.content or "")) # Response from the LLM model : qwen3:4b
+    print("🤖 Assistant: " + (msg.content or "")) # Response from the LLM model : qwen3:4b
